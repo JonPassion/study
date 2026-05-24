@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+study_buddy_env/
+venv/
+env/
+.env
+*.sqlite3
+staticfiles/
+.DS_Store
+*.log
