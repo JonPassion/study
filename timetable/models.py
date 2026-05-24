@@ -61,3 +61,39 @@ class ConversationState(models.Model):
 
     def __str__(self):
         return f"{self.phone_number} → {self.state}"
+
+
+class NotificationLog(models.Model):
+    TYPE_CHOICES = [
+        ('reminder', '5-min Reminder'),
+        ('start', 'Session Start'),
+        ('whatsapp_reply', 'WhatsApp Reply'),
+        ('test', 'Test'),
+        ('other', 'Other'),
+    ]
+
+    STATUS_CHOICES = [
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+        ('dry_run', 'Dry Run (no credentials)'),
+    ]
+
+    phone_number = models.CharField(max_length=30)
+    notification_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='other')
+    message = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    meta_message_id = models.CharField(max_length=100, blank=True)
+    error_detail = models.TextField(blank=True)
+    session = models.ForeignKey(
+        StudySession, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='logs'
+    )
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-sent_at']
+        verbose_name = 'Notification Log'
+        verbose_name_plural = 'Notification Logs'
+
+    def __str__(self):
+        return f"[{self.get_status_display()}] {self.phone_number} — {self.get_notification_type_display()} @ {self.sent_at.strftime('%Y-%m-%d %H:%M')}"
