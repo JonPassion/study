@@ -51,3 +51,13 @@ class StudySession(models.Model):
         if self.subject == 'other' and self.custom_subject:
             return self.custom_subject
         return self.get_subject_display()
+
+
+class ConversationState(models.Model):
+    phone_number = models.CharField(max_length=30, unique=True)
+    state = models.CharField(max_length=50, default='main_menu')
+    context = models.JSONField(default=dict, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.phone_number} → {self.state}"

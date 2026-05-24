@@ -75,6 +75,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 META_WHATSAPP_ACCESS_TOKEN = os.environ.get('META_WHATSAPP_ACCESS_TOKEN', '')
 META_WHATSAPP_PHONE_NUMBER_ID = os.environ.get('META_WHATSAPP_PHONE_NUMBER_ID', '')
+WEBHOOK_VERIFY_TOKEN = os.environ.get('WEBHOOK_VERIFY_TOKEN', 'studybuddy_verify_2024')
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.replit.dev',
